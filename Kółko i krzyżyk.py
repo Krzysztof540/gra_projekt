@@ -1,6 +1,8 @@
 import random
+import os
 
 tabela = []
+wybraneLiczby = []
 
 for i in range(9):
     tabela.append(' ')
@@ -15,9 +17,6 @@ def plansza(tabela):
    {tabela[6]} | {tabela[7]} | {tabela[8]}       7 | 8 | 9 
   """
     print(board)
-
-
-wybraneLiczby = []
 
 
 def ruch(numerPola):
@@ -58,16 +57,53 @@ def ruchKomputera():
             return y
 
 
-def result_calculation(tabela):
+def wynik(tabela):
     if tabela[0] == tabela[1] == tabela[2] == 'X' or tabela[1] == tabela[4] == tabela[7] == 'X' or tabela[0] == \
             tabela[4] == tabela[8] == 'X' or tabela[2] == tabela[5] == tabela[8] == 'X' or tabela[3] == tabela[4] == \
             tabela[5] == 'X' or tabela[2] == tabela[4] == tabela[6] == 'X' or tabela[6] == tabela[7] == tabela[8] == \
             'X' or tabela[0] == tabela[3] == tabela[6] == 'X':
-        quit('Gracz1 (X) wygrał')
+        input('Gracz 1 (X) wygrał! Wciśnij dowolny przycisk aby zakończyć')
+        quit()
+
     elif tabela[0] == tabela[1] == tabela[2] == 'O' or tabela[1] == tabela[4] == tabela[7] == 'O' or tabela[0] == \
             tabela[4] == tabela[8] == 'O' or tabela[2] == tabela[5] == tabela[8] == 'O' or tabela[3] == tabela[4] == \
             tabela[5] == 'O' or tabela[2] == tabela[4] == tabela[6] == 'O' or tabela[6] == tabela[7] == tabela[8] == \
             'O' or tabela[0] == tabela[3] == tabela[6] == 'O':
-        quit("Gracz2 (y) wygrał")
+        input('Gracz 2 (O) wygrał! Wciśnij dowolny przycisk aby zakończyć')
+        quit()
     else:
         return
+
+
+def startGry():
+    print("Kółko i krzyżyk")
+    while True:
+        wybor = input("Wybierz 1 jeśli chcesz być pierwszy lub 2 jeśli drugi:")
+        try:
+            wybor = int(wybor)
+        except:
+            print("Nie podano liczby")
+            continue
+        if wybor != 1 and wybor != 2:
+            print("Podana liczba to nie 1 ani 2")
+        else:
+            break
+    print("Gracz 1 - X")
+    print("Gracz 2 - O")
+    plansza(tabela)
+    for i in range(0, 9):
+        if i % 2 == wybor - 1:
+            index = ruchGracza()
+            tabela[index] = 'X'
+        else:
+            index = ruchKomputera()
+            tabela[index] = 'O'
+        os.system('cls')
+        plansza(tabela)
+        wynik(tabela)
+
+    input("Remis! Wciśnij dowolny przycisk aby zakończyć")
+    quit()
+
+
+startGry()
